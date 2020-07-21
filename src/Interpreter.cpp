@@ -180,8 +180,25 @@ std::string Interpreter::getVarName(const void *addr)
 /* Returns a fresh address to be used from the interpreter */
 void *Interpreter::getFreshAddr(unsigned int size, bool isLocal /* false */)
 {
-	char *newAddr = allocRangeBegin; /* Fetch the next from the pool */
-	allocRangeBegin += size;
+    /*size_t alignment = 0x400000;
+    size_t remainder = (size_t)allocRangeBegin % alignment;
+    char* allocatedAddr = allocRangeBegin;
+    allocRangeBegin += alignment - remainder;
+    char *newAddr = allocRangeBegin; *//* Fetch the next from the pool *//*
+    if ((size_t)allocRangeBegin % alignment != 0) {
+        BUG();
+    }
+    for (size_t i = 0; i < size; ++i) {
+        allocRangeBegin[i] = 0;
+    }
+    allocRangeBegin += size;*/
+
+    /*for (size_t i = 0; i < size; ++i) {
+        allocRangeBegin[i] = 0;
+    }*/
+
+    char *newAddr = allocRangeBegin; /* Fetch the next from the pool */
+    allocRangeBegin += size;
 
 	/* Track the allocated space */
 	if (isLocal) {

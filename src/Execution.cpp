@@ -1420,6 +1420,10 @@ void Interpreter::visitCallSite(CallSite CS) {
       return;
     }
 
+  if (!F) {
+    return;
+  }
+
 
   SF.Caller = CS;
   std::vector<GenericValue> ArgVals;
