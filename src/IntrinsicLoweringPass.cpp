@@ -74,12 +74,12 @@ bool IntrinsicLoweringPass::runOnBasicBlock(llvm::BasicBlock &BB, llvm::Module &
 
                 if (Callee->getIntrinsicID() == llvm::Intrinsic::objectsize) {
                     llvm::Value *replacement;
-                    llvm::IntegerType *intType = dyn_cast<llvm::IntegerType>(I->getType());
+                    llvm::IntegerType *intType = llvm::dyn_cast<llvm::IntegerType>(I->getType());
                     assert(intType && "intrinsic does not have integer return type");
 
                     llvm::Value *minArg = I->getArgOperand(1);
                     assert(minArg && "Failed to get second argument");
-                    llvm::ConstantInt *minArgAsInt = dyn_cast<llvm::ConstantInt>(minArg);
+                    llvm::ConstantInt *minArgAsInt = llvm::dyn_cast<llvm::ConstantInt>(minArg);
                     assert(minArgAsInt && "Second arg is not a ConstantInt");
                     assert(minArgAsInt->getBitWidth() == 1 &&
                            "Second argument is not an i1");
