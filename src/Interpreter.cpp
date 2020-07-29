@@ -201,28 +201,36 @@ void *Interpreter::getFreshAddr(unsigned int size, bool isLocal /* false */)
     allocRangeBegin += size;
 
 	/* Track the allocated space */
-	if (isLocal) {
-		for (auto i = 0u; i < size; i++)
-			stackAllocas.insert(newAddr + i);
-		/* The name information will be updated after control
-		 * returns to the interpreter */
-	} else {
-		for (auto i = 0u; i < size; i++)
-			heapAllocas.insert(newAddr + i);
-	}
+    if (isLocal) {
+        for (auto i = 0u; i < size; i++) {
+            stackAllocas.insert((char *) newAddr + i);
+            //*((char*)newAddr + i) = 0;
+        }
+        /* The name information will be updated after control
+         * returns to the interpreter */
+    } else {
+        for (auto i = 0u; i < size; i++) {
+            heapAllocas.insert((char *) newAddr + i);
+            //*((char*)newAddr + i) = 0;
+        }
+    }
 	return newAddr;
 }
 
 void Interpreter::allocateBlock(const void *addr, unsigned int size, bool isLocal)
 {
 	if (isLocal) {
-		for (auto i = 0u; i < size; i++)
-			stackAllocas.insert((char *) addr + i);
+		for (auto i = 0u; i < size; i++) {
+            stackAllocas.insert((char *) addr + i);
+            //*((char*)addr + i) = 0;
+        }
 		/* The name information will be updated after control
 		 * returns to the interpreter */
 	} else {
-		for (auto i = 0u; i < size; i++)
-			heapAllocas.insert((char *) addr + i);
+		for (auto i = 0u; i < size; i++) {
+            heapAllocas.insert((char *) addr + i);
+            //*((char*)addr + i) = 0;
+        }
 	}
 }
 

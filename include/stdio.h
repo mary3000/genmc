@@ -17,4 +17,18 @@ extern int printf(const char *, ...);
 extern int fprintf(FILE *, const char *, ...);
 extern size_t fwrite(const void *, size_t, size_t, FILE *);
 
+int	snprintf(char * __restrict __str, size_t __size, const char * __restrict __format, ...) {
+    // nothing
+    return 0;
+}
+
+int	 fputs(const char * __restrict a, FILE * __restrict b) {
+    return 0;
+}
+
+// int vsnprintf(char * __restrict __str, size_t __size, const char * __restrict __format, struct __va_list_tag *);
+
+#define	stdout	NULL
+#define	stderr	NULL
+
 #endif /* __STDIO_H__ */
